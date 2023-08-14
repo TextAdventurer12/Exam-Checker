@@ -54,7 +54,7 @@ int add_paper(char *arg, int len)
     }
     FILE *db = fopen("completed_papers.db", "r+");
     if (!db)
-        return 1;
+        exit(1);
     if (!unique_paper(db, arg))
     {
         printf("PAPER IS ALREADY PRINTED\n");
@@ -63,7 +63,7 @@ int add_paper(char *arg, int len)
     }
     fprintf(db, "\n%s", arg);
     fclose(db);
-    return 0;
+    return 1;
 }
 
 int valid_num(char *str)
@@ -136,7 +136,13 @@ int main(int argc, char **argv)
     if (!ADD_PAPER && !GET_PAPER)
         return 1;
     if (ADD_PAPER)
-        return add_paper(argv[1], strlen(argv[1]));
+        if (add_paper(argv[1], strlen(argv[1])))
+        {
+            printf("PAPER IS UNIQUE\n");
+            return 0;
+        }
+        else
+            return 0;
     if (!valid_num(argv[1]) || !valid_num(argv[2]) || !valid_num(argv[3]))
     {
         printf("Command Usage:\n");
