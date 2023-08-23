@@ -2,20 +2,17 @@
 #include <string.h>
 #include <stdlib.h>
 
-int between(int val, int min, int max)
-{
-    return val < max && val >= min;
-}
+#define lambda(name, func, ...) name(__VA_ARGS__) { return func; }
 
-char caps_lock(char letter)
-{
-    return letter > 'Z' ? letter - ('a' - 'A') : letter;
-}
+#define say_return(msg, val) { printf(msg); return val; }
 
-int is_letter(char val)
-{
-    return between(caps_lock(val), 'A', 'Z'+1);
-}
+#define assert(expression) {if (!expression) exit(1); }
+
+int lambda(between, val < max && val >= min, int val, int min, int max)
+
+char lambda(caps_lock, letter > 'Z' ? letter - ('a' - 'A') : letter, char letter)
+
+int lambda(is_letter, between(caps_lock(val), 'A', 'Z'+1), char val);
 
 int is_formatted(char *str, int len)
 {
@@ -47,14 +44,9 @@ int unique_paper(FILE *db, char *paper_code)
 int add_paper(char *arg, int len)
 {
     if (!is_formatted(arg, len))
-    {
-        printf("Please provide in the format:\n");
-        printf("{Subject Code}-{Paper Number}-{Month (Shortened to 3 letters)}-{Last 2 digits of year}\n");
-        return 1;
-    }
+        say_return("Provide in Format:\n{Subject Code}-{Paper Number}-{Month (Shortened to 3 letters)}-{Last 2 digits of year}\n", 1);
     FILE *db = fopen("completed_papers.db", "r+");
-    if (!db)
-        exit(1);
+    assert(db);
     if (!unique_paper(db, arg))
     {
         printf("PAPER IS ALREADY PRINTED\n");
