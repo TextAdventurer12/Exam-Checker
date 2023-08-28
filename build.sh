@@ -7,7 +7,7 @@ echo "Re-compiling"
 gcc main.c -o proj
 echo $VAL1 > .last_built
 fi
-./proj $1 $2 $3
+./proj "$@"
 if [[ $? -ne 0 ]]
 then
     echo $?
