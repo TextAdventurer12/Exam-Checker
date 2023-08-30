@@ -1,3 +1,10 @@
+if [[ $1 == '-h' ]]
+then
+echo 'Usage: build.sh {Paper Count} {Code} {Type}'
+echo 'Alt. Usage: build.sh {Code}-{Type}{Ver}-{Period}-{Year}'
+exit
+fi
+
 VAL1=$(stat -c '%Y' main.c | tr -d '\n')
 VAL2=$(cat .last_built | tr -d '\n')
 
